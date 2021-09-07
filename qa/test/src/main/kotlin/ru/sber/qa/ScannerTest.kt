@@ -36,6 +36,6 @@ internal class ScannerTest : BaseTest() {
         val array = Random.nextBytes(100)
         every{ Random.nextBytes(100) } returns array
 
-        assertEquals(array,Scanner.getScanData())
+        assertEquals(array, Scanner.getScanData())
     }
 }
