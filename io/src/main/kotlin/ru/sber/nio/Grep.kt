@@ -1,4 +1,9 @@
-package ru.sber.nio
+package main.kotlin.ru.sber.nio
+
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
+import kotlin.io.path.useLines
 
 /**
  * Реализовать простой аналог утилиты grep с использованием калссов из пакета java.nio.
@@ -14,7 +19,24 @@ class Grep {
      * Пример для подстроки "22/Jan/2001:14:27:46":
      * 22-01-2001-1.log : 3 : 192.168.1.1 - - [22/Jan/2001:14:27:46 +0000] "POST /files HTTP/1.1" 200 - "-"
      */
-    fun find(subString: String) {
+    fun find(subString: String,
+             pathToSearch: String = "io/logs/", fileNameOut: String = "result.txt", pathOut: String = "io/") {
+        val outputFile = File(pathOut + fileNameOut)
+
+        outputFile.bufferedWriter().use {
+            Files.walk(Paths.get(pathToSearch))
+                .filter { Files.isRegularFile(it) }
+                .forEach { inputFile ->
+                    inputFile.useLines { lines ->
+                        lines
+                            .filter { it.contains(subString) }
+                            .forEachIndexed { index, line ->
+                                it.write("${inputFile.fileName} : ${index + 1} : $line\n")
+                            }
+                    }
+                }
+        }
+
 
     }
 }
