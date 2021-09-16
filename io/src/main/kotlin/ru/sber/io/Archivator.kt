@@ -18,14 +18,14 @@ class Archivator {
     fun zipLogfile(fileNameIn: String = "logfile.log", fileNameOut: String = "logfile.zip",
                    pathIn: String = "io/", pathOut: String = pathIn ) {
         val inputFile = File(pathIn + fileNameIn)
-        val outputFIle = File(pathOut + fileNameOut)
+        val outputFile = File(pathOut + fileNameOut)
         var inputBuffer: ByteArray
 
         inputFile.inputStream().use {
             inputBuffer = it.readBytes()
         }
 
-        ZipOutputStream(outputFIle.outputStream()).use {
+        ZipOutputStream(outputFile.outputStream()).use {
             it.putNextEntry(ZipEntry(fileNameIn))
             it.write(inputBuffer)
         }
@@ -38,7 +38,7 @@ class Archivator {
     fun unzipLogfile(fileNameIn: String = "logfile.zip", fileNameOut: String = "unzippedLogfile.log",
                      pathIn: String = "io/", pathOut: String = pathIn) {
         val inputFile = File(pathIn + fileNameIn)
-        val outputFIle = File(pathOut + fileNameOut)
+        val outputFile = File(pathOut + fileNameOut)
         var inputBuffer: ByteArray
 
         ZipInputStream(inputFile.inputStream()).use {
@@ -46,7 +46,7 @@ class Archivator {
             inputBuffer = it.readBytes()
         }
 
-        outputFIle.outputStream().use {
+        outputFile.outputStream().use {
             it.write(inputBuffer)
         }
     }
