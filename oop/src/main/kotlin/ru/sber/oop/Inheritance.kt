@@ -8,13 +8,11 @@ open class Room(val name: String, val size: Int) {
 
     open fun load() = this.enemy.getSalutation()
 
-    fun default(): Room {
-        return Room( "Bedroom", 100)
-    }
+    constructor(name: String): this(name, 100)
 }
 
 class TownSquare(): Room("Town Square", 1000){
     override val dangerLevel = super.dangerLevel - 3
     
-    override fun load() = "King $name"
+    final override fun load() = "King $name"
 }
